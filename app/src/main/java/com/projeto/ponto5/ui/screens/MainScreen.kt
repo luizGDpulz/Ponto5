@@ -1,3 +1,5 @@
+package com.projeto.ponto5.ui.screens
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -14,13 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.projeto.ponto5.ui.theme.White
 import com.projeto.ponto5.viewmodel.MainViewModel
 
 @Composable
-fun ConfigScreen(viewModel: MainViewModel) {
-    val viewModel: MainViewModel = viewModel()
+fun MainScreen(viewModel: MainViewModel) {
+    //val viewModel: MainViewModel = viewModel()
 
     val cpf by viewModel.cpf.collectAsState()
     var resultado by remember { mutableStateOf("") }

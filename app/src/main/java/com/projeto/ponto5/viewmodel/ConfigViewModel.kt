@@ -1,12 +1,16 @@
+package com.projeto.ponto5.viewmodel
+
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.projeto.ponto5.data.lerCredenciais
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import com.projeto.ponto5.data.salvarCredenciais
 
-class MainViewModel : ViewModel() {
+class ConfigViewModel : ViewModel() {
 
     // Event flow de mensagens para UI
     private val _eventoResultado = MutableSharedFlow<String>()

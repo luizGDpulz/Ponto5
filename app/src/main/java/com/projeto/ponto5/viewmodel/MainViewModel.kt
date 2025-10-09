@@ -16,7 +16,6 @@ import java.util.*
 
 
 class MainViewModel : ViewModel() {
-
     private val _cpf = MutableStateFlow("")
     val cpf = _cpf.asStateFlow()
 
@@ -36,7 +35,6 @@ class MainViewModel : ViewModel() {
             _eventoResultado.emit(msg)
         }
     }
-
 
     private fun salvarToken(novoToken: String) {
         _token.value = novoToken
