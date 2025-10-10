@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class MainViewModel : ViewModel() {
     private val _cpf = MutableStateFlow("")
     val cpf = _cpf.asStateFlow()
@@ -25,6 +24,29 @@ class MainViewModel : ViewModel() {
     private val _eventoResultado = MutableSharedFlow<String>()
 
     val eventoResultado = _eventoResultado.asSharedFlow()
+
+    private val _navigation = MutableSharedFlow<String>()
+    val navigation = _navigation.asSharedFlow()
+
+    fun validarCpfEContinuar() {
+        viewModelScope.launch {
+            val cpfAtual = cpf.value.trim()
+
+            if (cpfAtual.isEmpty()) {
+                atualizarResultado("⚠️ CPF não pode estar vazio")
+                return@launch
+            }
+
+            if (!cpfAtual.all { it.isDigit() }) {
+                atualizarResultado("❌ CPF deve conter apenas números")
+                return@launch
+            }
+
+            // Se chegou até aqui, CPF está válido
+            _navigation.emit("main/$cpfAtual")
+        }
+    }
+
 
     fun atualizarCpf(novoCpf: String) {
         _cpf.value = novoCpf

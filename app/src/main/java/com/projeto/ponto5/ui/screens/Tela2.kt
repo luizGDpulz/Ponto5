@@ -6,6 +6,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,14 +22,21 @@ import com.projeto.ponto5.ui.theme.White
 import com.projeto.ponto5.viewmodel.MainViewModel
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
-    //val viewModel: MainViewModel = viewModel()
-
+fun Tela2Screen(viewModel: MainViewModel, navController: NavHostController) {
     val cpf by viewModel.cpf.collectAsState()
     var resultado by remember { mutableStateOf("") }
 
-    LaunchedEffect(viewModel) {
-        viewModel.login()
+    LaunchedEffect(Unit) {
+        viewModel.navigation.collect { route ->
+            navController.navigate(route) {
+                popUpTo("config") { inclusive = true }
+                launchSingleTop = true
+            }
+        }
+    }
+
+    // Mensagens
+    LaunchedEffect(Unit) {
         viewModel.eventoResultado.collect { msg ->
             resultado = msg
         }
@@ -42,28 +50,25 @@ fun MainScreen(viewModel: MainViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Configurações", style = MaterialTheme.typography.bodyLarge, color = White)
+
         OutlinedTextField(
             value = cpf,
-            onValueChange = { viewModel.atualizarCpf(it) },
+            onValueChange = {viewModel.atualizarCpf(it)},
             label = { Text("CPF") }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            viewModel.incluirPonto(
-                latitude = -29.656351437469443,
-                longitude = -51.051604049630456,
-                precisao = 10.0
-            )
+            viewModel.validarCpfEContinuar()
         }) {
-            Text("Incluir Ponto")
+            Text("Main")
         }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         if (resultado.isNotEmpty()) {
-            Text(resultado, style = MaterialTheme.typography.bodyLarge, color = White)
+            Text(resultado, color = MaterialTheme.colorScheme.error)
         }
     }
 }

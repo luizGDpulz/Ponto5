@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.projeto.ponto5.viewmodel.ConfigViewModel
 
 // -------------------- Composable --------------------
